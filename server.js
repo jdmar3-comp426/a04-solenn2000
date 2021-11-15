@@ -16,7 +16,7 @@ const server= app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT))
 });
 // READ (HTTP method GET) at root endpoint /app/
-app.get("/api/", (req, res, next) => {
+app.get("/app/", (req, res, next) => {
     res.json({"message":"Your API works! (200)"});
 	res.status(200);
 });
@@ -38,12 +38,17 @@ app.get("/app/users", (req, res) => {
 
 // READ a single user (HTTP method GET) at endpoint /app/user/:id
 app.get("/app/user/:id", (req, res) => {
-	const stmt = db.prepare("SELECT * FROM userinfo WHERE id = ?");
-
+	const stmt = db.prepare("SELECT * FROM userinfo WHERE id = ?").get(req.params.id);
 	res.status(200).json(stmt);
 });
 
 // DELETE a single user (HTTP method DELETE) at endpoint /app/delete/user/:id
+app.delete('/app/delete/user/:id', function (req, res) {
+	// db.prepare("delete").run(req.params.id)
+	res.send("DELETE FROM userinfo WHERE id = ?");
+	//include info about deleted object
+	res.status(200).json(stmt);
+});
 
 // Default response for any other request
 app.use(function(req, res){
