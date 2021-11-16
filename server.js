@@ -44,8 +44,8 @@ app.get("/app/user/:id", (req, res) => {
 
 // DELETE a single user (HTTP method DELETE) at endpoint /app/delete/user/:id
 app.delete('/app/delete/user/:id', function (req, res) {
-	// db.prepare("delete").run(req.params.id)
-	res.send("DELETE FROM userinfo WHERE id = ?");
+	const stmt = db.prepare("DELETE FROM userinfo WHERE id = ?").run(req.params.id)
+
 	//include info about deleted object
 	res.status(200).json(stmt);
 });
