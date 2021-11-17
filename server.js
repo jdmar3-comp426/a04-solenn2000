@@ -57,6 +57,7 @@ app.delete('/app/delete/user/:id', function (req, res) {
 	const stmt = db.prepare("DELETE FROM userinfo WHERE id = ?")
 	const info = stmt.run(req.params.id);
 	res.json({"message": info.changes+ " record deleted: ID " +req.params.id+ " (200)"});
+	res.status(200).json(stmt);
 
 	//include info about deleted object
 
